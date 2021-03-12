@@ -1,0 +1,55 @@
+{
+  "name": "EventThorn",
+  "version": "1.0.0",
+  "description": "An event management app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://phalrach@bitbucket.org/phalrach/eventthorn.git"
+  },
+  "keywords": [
+    "events",
+    "salesforce",
+    "essions"
+  ],
+  "author": "pkrachoor@gmail.com",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/phalrach/eventthorn#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "hashmap": "^2.4.0",
+    "helmet": "^3.23.3",
+    "jsforce": "^1.10.1",
+    "lodash": "^4.17.15",
+    "morgan": "^1.10.0",
+    "nforce": "^1.12.2",
+    "nodemon": "^2.0.4",
+    "slugify": "^1.4.0",
+    "validator": "^13.0.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.17.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
