@@ -13,11 +13,12 @@ exports.validateEventsData = (req,res,next)=>{
       title:Joi.string  ().required(),
       status:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
       registrationLimit:Joi.number().required(),
-      remainingSeats:Joi.number().required(),
-      start:Joi.date().required(),
+      // remainingSeats:Joi.number().required(),
+      startDate:Joi.date().required(),
       startTime:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-      end:Joi.date().required(),
+      endDate:Joi.date().required(),
       endTime:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
+      description:Joi.string().required()
     })
   
 
@@ -33,9 +34,7 @@ exports.validateEventsData = (req,res,next)=>{
 
 exports.createEvent = async (req, res) => {
     // const resp = await factory.createOne('Event', req.body, req.headers.authorization.split(' ')[1]);
-    const data = factory.createOne('Event', req.body, process.env.OAUTH, (err,resp)=>{
-      console.log(err);console.log(resp);
-    });
+    const data = await factory.createOne('ThornEvent', req.body);
     res.json({'data':data()});
   };
   

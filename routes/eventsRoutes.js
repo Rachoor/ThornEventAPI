@@ -6,7 +6,7 @@ const router = express.Router({
   mergeParams: true
 });
 
-router.use(authController.authenticateUser);
+router.use(authController.getToken);
 
 router
   .route('/')

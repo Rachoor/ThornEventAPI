@@ -12,44 +12,48 @@ exports.org = nforce.createConnection({
   mode: MODE, // optional, 'single' or 'multi' user mode, multi default
   autoRefresh:true,
   onRefresh: function(newOauth, oldOauth, cb) {
-    process.env.OAUTH = newOauth.access_token;
+    process.env.OAUTH = JSON.stringify(newOauth);
   }
 });
 
+exports.authenticateUser = catchAsync(async (req,res)=>{
+  // check if user has valid token from salesforce;
+});
 
-exports.authenticateUser = catchAsync(async(req,res,next)=>{
+
+exports.getToken = catchAsync(async(req,res,next)=>{
 //   if request has BEARER Token:
 // 	use that TOKEN in controller and use next();
-if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    req.OAUTH  = req.headers.authorization.split(' ')[1];
-    return next();
+// if (
+//     req.headers.authorization &&
+//     req.headers.authorization.startsWith('Bearer')
+//   ) {
+//     req.OAUTH  = req.headers.authorization.split(' ')[1];
+//     return next();
     
-  }
+//   }
 // else:
-else{
+// else{
   // 	if request has USERNAME, PASSWORD:
-  if(req.body && (req.body.userName && req.body.password)) {
-    const {userName, password} = req.body;
-    // 		get USERNAME, PASSWORD FROM REQUEST
-    this.org.authenticate({ username: userName, password: password}, async function(err, resp){
-      // 			if request success: send TOKEN in response
-      if(!err) {
-        req.OAUTH = await resp.access_token;
-        return next();
-      }
-      else{
-        // 			else: send error to check USERNAME and PASSWORD
-        return next(new AppError(
-          'There is some problem with Username/ or Password.',
-          403
-        ));
-      }
-    });
-  }
-  else{
+  // if(req.body && (req.body.userName && req.body.password)) {
+  //   const {userName, password} = req.body;
+  //   // 		get USERNAME, PASSWORD FROM REQUEST
+  //   this.org.authenticate({ username: userName, password: password}, async function(err, resp){
+  //     // 			if request success: send TOKEN in response
+  //     if(!err) {
+  //       req.OAUTH = await resp;
+  //       return next();
+  //     }
+  //     else{
+  //       // 			else: send error to check USERNAME and PASSWORD
+  //       return next(new AppError(
+  //         'There is some problem with Username/ or Password.',
+  //         403
+  //       ));
+  //     }
+  //   });
+  // }
+  // else{
     // 		if TOKEN in env variables:
     if(process.env.OAUTH) {
       // 			use existed TOKEN in controller and use next();
@@ -60,7 +64,7 @@ else{
       this.org.authenticate({ username: SF_USERNAME, password: SF_PASSWORD}, async function(err, resp){
         // 			if request success: save in env varibales
         if(!err) {
-          process.env.OAUTH = await resp.access_token;
+          process.env.OAUTH = await JSON.stringify(resp);
           return next();
           }
           // 			else: send error as SERVER Error
@@ -72,8 +76,8 @@ else{
           }
       });
     }
-  }
-}
+  // }
+// }
 });
 
 exports.login = catchAsync(async (req,res)=>{
