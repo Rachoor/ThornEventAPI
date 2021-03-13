@@ -60,7 +60,7 @@ else{
       this.org.authenticate({ username: SF_USERNAME, password: SF_PASSWORD}, async function(err, resp){
         // 			if request success: save in env varibales
         if(!err) {
-          // process.env.OAUTh = await resp;
+          process.env.OAUTH = await resp.access_token;
           return next();
           }
           // 			else: send error as SERVER Error

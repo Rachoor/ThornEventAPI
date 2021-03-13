@@ -12,6 +12,7 @@ router
   .route('/')
   .get(eventsController.getEvents)
   .post(
+    eventsController.validateEventsData,
     eventsController.createEvent
   );
 
