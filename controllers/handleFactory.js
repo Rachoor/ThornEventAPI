@@ -3,14 +3,19 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const authController = require('./authController');
 
-exports.createOne = (Subject, body) =>
-    catchAsync(async ()=>{
+exports.createOne = (Subject) =>
+ (req,res,next)=>{
         const subject = nforce.createSObject(Subject);
-
-        console.log(JSON.parse(process.env.OAUTH));
-        Object.keys(body).map((key) => subject.set(key, body[key]));
-        authController.org.insert({sobject:subject, oauth:JSON.parse(process.env.OAUTH)},function(err, resp){
-            if(!err)  console.log(resp);
-            else  console.log(err); 
+        Object.keys(req.body).map((key) => subject.set(key, req.body[key]));
+         authController.org.insert({sobject:subject, oauth:JSON.parse(process.env.OAUTH)},function(err, resp){
+            if(!err)  {
+                res.status(201).json({
+                    status: 'success',
+                    data: {
+                      data: resp
+                    }
+                  });
+            }
+            else res.status(err.statusCode).json(err);
           });
-    });
+    };

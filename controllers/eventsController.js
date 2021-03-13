@@ -5,20 +5,21 @@ const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory= require('./handleFactory');
+const authController = require('./authController');
 
 
 
 exports.validateEventsData = (req,res,next)=>{
   const JoiSchema = Joi.object({
-      title:Joi.string  ().required(),
-      status:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
-      registrationLimit:Joi.number().required(),
+      title__c:Joi.string  ().required(),
+      status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+      registrationLimit__c:Joi.number().required(),
       // remainingSeats:Joi.number().required(),
-      startDate:Joi.date().required(),
-      startTime:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-      endDate:Joi.date().required(),
-      endTime:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-      description:Joi.string().required()
+      startDate__c:Joi.date().required(),
+      startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+      endDate__c:Joi.date().required(),
+      endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+      description__c:Joi.string().required()
     })
   
 
@@ -32,12 +33,13 @@ exports.validateEventsData = (req,res,next)=>{
   }
 }
 
-exports.createEvent = async (req, res) => {
-    // const resp = await factory.createOne('Event', req.body, req.headers.authorization.split(' ')[1]);
-    const data = await factory.createOne('ThornEvent', req.body);
-    res.json({'data':data()});
-  };
+// exports.createEvent = async (req, res) => {
+//   await factory.createOne('ThornEvent__c', req.body);
+// };
   
+exports.createEvent = factory.createOne('ThornEvent__c');
+  
+
   exports.getEvent = (req, res) => {
     res.status(500).json({
       status: 'error',
@@ -46,9 +48,17 @@ exports.createEvent = async (req, res) => {
   };
   
   exports.getEvents = (req, res) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This route is not yet defined!'
+    var q = 'SELECT title__c, startDate__c, endDate__c, registrationLimit__c, startTime__c, endTime__c, description__c, status__c FROM ThornEvent__c';
+    authController.org.query({ query: q, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
+      if(!err) {
+        res.status(200).json({
+        status: 'success',
+        data:resp.records
+    });
+    }
+    else {
+      res.status(err.statusCode).json(err);
+      }
     });
   };
   
