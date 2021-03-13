@@ -32,10 +32,6 @@ exports.validateEventsData = (req,res,next)=>{
     next();
   }
 }
-
-// exports.createEvent = async (req, res) => {
-//   await factory.createOne('ThornEvent__c', req.body);
-// };
   
 exports.createEvent = factory.createOne('ThornEvent__c');
   
@@ -47,20 +43,35 @@ exports.createEvent = factory.createOne('ThornEvent__c');
     });
   };
   
-  exports.getEvents = (req, res) => {
-    var q = 'SELECT title__c, startDate__c, endDate__c, registrationLimit__c, startTime__c, endTime__c, description__c, status__c FROM ThornEvent__c';
-    authController.org.query({ query: q, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
-      if(!err) {
-        res.status(200).json({
-        status: 'success',
-        data:resp.records
-    });
-    }
-    else {
-      res.status(err.statusCode).json(err);
-      }
-    });
-  };
+  // exports.getEvents = (req, res) => {
+  //   var q = 'SELECT title__c, startDate__c, endDate__c, registrationLimit__c, startTime__c, endTime__c, description__c, status__c FROM ThornEvent__c';
+  //   authController.org.query({ query: q, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
+  //     if(!err) {
+  //       res.status(200).json({
+  //       status: 'success',
+  //       data:resp.records
+  //   });
+  //   }
+  //   else {
+  //     res.status(err.statusCode).json(err);
+  //     }
+  //   });
+  // };
+
+  exports.getEvents = factory.getAll(`
+  SELECT 
+  title__c, 
+  startDate__c, 
+  endDate__c, 
+  registrationLimit__c, 
+  startTime__c, 
+  endTime__c, 
+  description__c, 
+  status__c 
+  FROM 
+  ThornEvent__c
+  `);
+
   
   exports.registerAttendee = (req, res) => {
     res.status(500).json({
