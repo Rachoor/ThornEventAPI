@@ -60,7 +60,10 @@ exports.createEvent = factory.createOne('ThornEvent__c');
 
   exports.getEvents = factory.getAll(`
   SELECT 
+  id,
   title__c, 
+  category__c,
+  imageURL__c,
   startDate__c, 
   endDate__c, 
   registrationLimit__c, 
@@ -71,7 +74,6 @@ exports.createEvent = factory.createOne('ThornEvent__c');
   FROM 
   ThornEvent__c
   `);
-
   
   exports.registerAttendee = (req, res) => {
     res.status(500).json({
