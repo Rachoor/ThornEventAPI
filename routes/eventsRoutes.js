@@ -16,6 +16,16 @@ router
     eventsController.createEvent
   );
 
+  router
+  .route('/registerAttendee')
+  .post(
+      eventsController.registerAttendee
+      );
+  router
+  .route('/registerAttendees')
+  .post(
+      eventsController.registerAttendees
+      );
 router
   .route('/:eventID')
   .get(eventsController.getEvent)
@@ -29,16 +39,6 @@ router
     .route('/:userID/:eventID')
     .get(eventsController.getAllUserEvents)
     
-router
-.route('/registerAttendee')
-.post(
-    eventsController.registerAttendee
-    );
-router
-.route('/registerAttendees')
-.post(
-    eventsController.registerAttendees
-    );
 
 
 module.exports = router;

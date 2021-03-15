@@ -20,8 +20,13 @@ exports.createOne = (Subject) =>
           });
     };
 
-exports.getData = async (req,res,query)=>{
+exports.getQueryData = async(query) =>{
   let result = await authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) });
+  return result;
+}    
+
+exports.getData = async (req,res,query)=>{
+  let result = await this.getQueryData(query);
   return res.status(200).json({
     records:result.records, 
     totalSize:result.totalSize
@@ -29,8 +34,7 @@ exports.getData = async (req,res,query)=>{
 }
 
 exports.updateData = async (req,res,query)=>{
-  const result = await this.getData(query);
-  console.log('resutl', result);
+  let result = await this.getQueryData(query);
   if(result && result.records) {
     let acc = result.records[0];
     Object.keys(req.body).map(key=>acc.set(key, req.body[key]));
