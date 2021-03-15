@@ -20,16 +20,21 @@ exports.createOne = (Subject) =>
           });
     };
 
-exports.getAll = (query) => (req,res,next)=>{
-    authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
-        if(!err) {
-          res.status(200).json({
-          status: 'success',
-          data:resp.records
-      });
-      }
-      else {
-        res.status(err.statusCode).json(err);
-        }
-      });
-};
+// exports.getAll = (query) => (req,res,next)=>{
+//     authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
+//         if(!err && resp) {
+//           res.status(200).json({
+//           status: 'success',
+//           data:resp.records
+//       });
+//       }
+//       else {
+//         res.status(err.statusCode).json(err);
+//         }
+//       });
+// };
+
+exports.getData = async (query)=>{
+  let result = await authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) });
+  return result;
+}

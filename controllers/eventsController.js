@@ -21,6 +21,17 @@ exports.validateEventsData = (req,res,next)=>{
       endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
       description__c:Joi.string().required()
     })
+
+exports.validateAttendeeData = (req,res,next)=>{
+  const JoiSchema = Joi.object({
+    firstName__c:Joi.string().required(),
+    lastName__c:Joi.string().required,
+    email__c:Joi.email().required(),
+    phone__c:Joi.phone().required(),
+    company__c:Joi.string().required(),
+    // session
+  });
+};
   
 
   const validation = JoiSchema.validate(req.body);
@@ -35,49 +46,59 @@ exports.validateEventsData = (req,res,next)=>{
   
 exports.createEvent = factory.createOne('ThornEvent__c');
   
+exports.getEvent = async (req,res)=>{
+    let query =  `SELECT
+                    Id, 
+                    title__c, 
+                    startDate__c, 
+                    endDate__c, 
+                    registrationLimit__c, 
+                    startTime__c, 
+                    endTime__c, 
+                    description__c, 
+                    status__c 
+                    FROM 
+                    ThornEvent__c
+                    WHERE 
+                    Id='${req.params.eventID}'
+                    `
+     const result = await factory.getData(query);
+     return res.json({data:result});
+  }
 
-  exports.getEvent = (req, res) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This route is not yet defined!'
+  exports.getEvents = async (req,res)=>{
+    // make OAUTH token checking here
+    let query = `
+    SELECT 
+    Id,
+    title__c, 
+    startDate__c, 
+    endDate__c, 
+    registrationLimit__c, 
+    startTime__c, 
+    endTime__c, 
+    description__c, 
+    status__c,
+    category__c,
+    seatsRemaining__c
+    FROM 
+    ThornEvent__c
+    `;
+    const result = await factory.getData(query);
+    return res.json({
+      records:result.records, 
+      totalSize:result.totalSize
     });
-  };
+  }
   
-  // exports.getEvents = (req, res) => {
-  //   var q = 'SELECT title__c, startDate__c, endDate__c, registrationLimit__c, startTime__c, endTime__c, description__c, status__c FROM ThornEvent__c';
-  //   authController.org.query({ query: q, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
-  //     if(!err) {
-  //       res.status(200).json({
-  //       status: 'success',
-  //       data:resp.records
-  //   });
-  //   }
-  //   else {
-  //     res.status(err.statusCode).json(err);
-  //     }
-  //   });
-  // };
-
-  exports.getEvents = factory.getAll(`
-  SELECT 
-  title__c, 
-  startDate__c, 
-  endDate__c, 
-  registrationLimit__c, 
-  startTime__c, 
-  endTime__c, 
-  description__c, 
-  status__c 
-  FROM 
-  ThornEvent__c
-  `);
 
   
   exports.registerAttendee = (req, res) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This route is not yet defined!'
-    });
+    console.log(req.body)
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: 'This route is not yet defined!'
+    // });
   };
 
   exports.registerAttendees = (req, res) => {
