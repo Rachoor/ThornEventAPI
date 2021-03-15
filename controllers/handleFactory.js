@@ -20,7 +20,6 @@ exports.createOne = (Subject) =>
           });
     };
 
-<<<<<<< HEAD
 // exports.getAll = (query) => (req,res,next)=>{
 //     authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
 //         if(!err && resp) {
@@ -39,20 +38,3 @@ exports.getData = async (query)=>{
   let result = await authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) });
   return result;
 }
-=======
-exports.getAll = (query) => (req,res,next)=>{
-    authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
-        if(!err) {
-          res.status(200).json({
-          status: 'success',
-          data:resp.records
-      });
-      }
-      else {
-        res.status(err.statusCode).json(err);
-        }
-      });
-      
-};
-
->>>>>>> c06424eff778f768e7a4bba22a0062819f0830d7
