@@ -65,6 +65,7 @@ exports.getEvent = async (req,res)=>{
      await factory.getData(req,res,query);
   }
 
+
   exports.getEvents = async (req,res)=>{
     // make OAUTH token checking here
     let query = `
@@ -104,6 +105,30 @@ exports.getEvent = async (req,res)=>{
     ThornEvent__c
     WHERE
     createdUserId__c='${req.params.userID}'
+    `;
+    await factory.getData(req,res,query);
+  }
+
+  exports.getAllUserEvent = async (req,res)=>{
+    let query = `
+    SELECT 
+    Id,
+    title__c, 
+    startDate__c, 
+    endDate__c, 
+    registrationLimit__c, 
+    startTime__c, 
+    endTime__c, 
+    description__c, 
+    status__c,
+    category__c,
+    seatsRemaining__c
+    FROM 
+    ThornEvent__c
+    WHERE
+    createdUserId__c='${req.params.userID}'
+    AND
+    Id='${req.params.eventID}'
     `;
     await factory.getData(req,res,query);
   }
