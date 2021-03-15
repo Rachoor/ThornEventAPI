@@ -19,10 +19,14 @@ router
 router
   .route('/:eventID')
   .get(eventsController.getEvent)
-  .post(eventsController.updateEvent)
+  .patch(eventsController.updateEvent)
 
 router
-    .route('/:userId/myEvents')
+    .route('/:userID/myEvents')
+    .get(eventsController.getAllUserEvents)
+
+router
+    .route('/:userID/:eventID')
     .get(eventsController.getAllUserEvents)
     
 router

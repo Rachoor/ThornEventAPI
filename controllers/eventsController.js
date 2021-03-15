@@ -61,7 +61,7 @@ exports.getEvent = async (req,res)=>{
                     ThornEvent__c
                     WHERE 
                     Id='${req.params.eventID}'
-                    `
+                    `;
      await factory.getData(req,res,query);
   }
 
@@ -134,7 +134,7 @@ exports.getEvent = async (req,res)=>{
   }
   
   exports.updateEvent = async(req,res) =>{
-    // query to retrieve record
+    // query to retrieve record    
     let query = `SELECT 
                   Id,
                   title__c, 
@@ -153,6 +153,10 @@ exports.getEvent = async (req,res)=>{
                   Id='${req.params.eventID}'`;
 
     await factory.updateData(req,res,query);
+  }
+
+  exports.deleteEvent = async (req,res)=>{
+    
   }
   
   exports.registerAttendee = (req, res) => {

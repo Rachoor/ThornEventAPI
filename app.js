@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/login', authController.login);
 app.use('/api/v1/events/', eventsRoutes);
-app.use('/ap/v1/categories', categoriesRoutes);
+app.use('/api/v1/categories', categoriesRoutes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

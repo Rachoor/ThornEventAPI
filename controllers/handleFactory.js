@@ -30,6 +30,7 @@ exports.getData = async (req,res,query)=>{
 
 exports.updateData = async (req,res,query)=>{
   const result = await this.getData(query);
+  console.log('resutl', result);
   if(result && result.records) {
     let acc = result.records[0];
     Object.keys(req.body).map(key=>acc.set(key, req.body[key]));
