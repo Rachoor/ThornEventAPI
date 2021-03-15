@@ -1,45 +1,105 @@
-const factory = require('./handleFactory');
+const { validate, ValidationError, Joi } = require('express-validation')
 
-exports.validateSessionsData = ()=>{}
+const APIFeatures = require('./../utils/apiFeatures');
+const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
+const factory= require('./handleFactory');
+const authController = require('./authController');
 
-exports.createSession = async (req,res)=>{
-    res.status(500).json({
-        status: 'error',
-        message: 'This route is not yet defined!'
-      });
+
+
+exports.validateSessionsData = (req,res,next)=>{
+  const JoiSchema = Joi.object({
+      event__c:Joi.string  ().required(),
+      status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+      registrationLimit__c:Joi.number().required(),
+      remainingSeats:Joi.number(),
+      startDate__c:Joi.date().required(),
+      startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+      endDate__c:Joi.date().required(),
+      endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+      description__c:Joi.string().required()
+    })
+
+    const validation = JoiSchema.validate(req.body);
+    if( validation.error ) {
+      return res.status(400).json({
+        message : validation.error.details
+      })
+    } else{
+      next();
+    }
   }
 
-  exports.editSession = async(req,res)=>{
+exports.createSession = factory.createOne('Session__c');
+
+exports.getSessions = async (req,res)=>{
+    let query =  `SELECT
+                    Id, 
+                    title__c, 
+                    startDate__c, 
+                    endDate__c, 
+                    registrationLimit__c, 
+                    startTime__c, 
+                    endTime__c, 
+                    description__c, 
+                    status__c,
+                    event__c 
+                    FROM 
+                    Session__c
+                    WHERE 
+                    event__c'${req.params.eventID}'
+                    `;
+     await factory.getData(req,res,query);
+  }
+
+exports.deleteSession = async (req,res) =>{
         res.status(500).json({
       status: 'error',
       message: 'This route is not yet defined!'
     });
   }
 
-  exports.getSessions = async (req,res)=>{
-        res.status(500).json({
-      status: 'error',
-      message: 'This route is not yet defined!'
-    });
+exports.getSession = async (req,res)=>{
+    let query =  `SELECT
+                    Id, 
+                    title__c, 
+                    startDate__c, 
+                    endDate__c, 
+                    registrationLimit__c, 
+                    startTime__c, 
+                    endTime__c, 
+                    description__c, 
+                    status__c,
+                    event__c 
+                    FROM 
+                    Session__c
+                    WHERE 
+                    event__c='${req.params.eventID}'
+                    AND
+                    Id='${req.params.sessionID}
+                    `;
+     await factory.getData(req,res,query);
   }
 
-  exports.deleteSession = async (req,res) =>{
-        res.status(500).json({
-      status: 'error',
-      message: 'This route is not yet defined!'
-    });
+exports.updateSession = async (req,res)=>{
+    let query =  `SELECT
+                    Id, 
+                    title__c, 
+                    startDate__c, 
+                    endDate__c, 
+                    registrationLimit__c, 
+                    startTime__c, 
+                    endTime__c, 
+                    description__c, 
+                    status__c,
+                    event__c 
+                    FROM 
+                    Session__c
+                    WHERE 
+                    event__c='${req.params.eventID}'
+                    AND
+                    Id='${req.params.sessionID}
+                    `;
+     await factory.updateData(req,res,query);
   }
-
-  exports.getSession = async (req,res) =>{
-    res.status(500).json({
-  status: 'error',
-  message: 'This route is not yet defined!'
-});
-}
-
-exports.updateSession = async (req,res) =>{
-    res.status(500).json({
-  status: 'error',
-  message: 'This route is not yet defined!'
-});
-}
