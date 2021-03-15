@@ -62,8 +62,7 @@ exports.getEvent = async (req,res)=>{
                     WHERE 
                     Id='${req.params.eventID}'
                     `
-     const result = await factory.getData(query);
-     return res.json({data:result});
+     await factory.getData(req,res,query);
   }
 
   exports.getEvents = async (req,res)=>{
@@ -84,13 +83,52 @@ exports.getEvent = async (req,res)=>{
     FROM 
     ThornEvent__c
     `;
-    const result = await factory.getData(query);
-    return res.json({
-      records:result.records, 
-      totalSize:result.totalSize
-    });
+    await factory.getData(req,res,query);
+  }
+
+  exports.getAllUserEvents = async (req,res)=>{
+    let query = `
+    SELECT 
+    Id,
+    title__c, 
+    startDate__c, 
+    endDate__c, 
+    registrationLimit__c, 
+    startTime__c, 
+    endTime__c, 
+    description__c, 
+    status__c,
+    category__c,
+    seatsRemaining__c
+    FROM 
+    ThornEvent__c
+    WHERE
+    createdUserId__c='${req.params.userID}'
+    `;
+    await factory.getData(req,res,query);
   }
   
+  exports.updateEvent = async(req,res) =>{
+    // query to retrieve record
+    let query = `SELECT 
+                  Id,
+                  title__c, 
+                  startDate__c, 
+                  endDate__c, 
+                  registrationLimit__c, 
+                  startTime__c, 
+                  endTime__c, 
+                  description__c, 
+                  status__c,
+                  category__c,
+                  seatsRemaining__c
+                  FROM 
+                  ThornEvent__c
+                  WHERE
+                  Id='${req.params.eventID}'`;
+
+    await factory.updateData(req,res,query);
+  }
   
   exports.registerAttendee = (req, res) => {
     console.log(req.body)

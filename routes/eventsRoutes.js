@@ -18,8 +18,13 @@ router
 
 router
   .route('/:eventID')
-  .get(eventsController.getEvent);
+  .get(eventsController.getEvent)
+  .post(eventsController.updateEvent)
 
+router
+    .route('/:userId/myEvents')
+    .get(eventsController.getAllUserEvents)
+    
 router
 .route('/registerAttendee')
 .post(

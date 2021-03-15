@@ -20,21 +20,26 @@ exports.createOne = (Subject) =>
           });
     };
 
-// exports.getAll = (query) => (req,res,next)=>{
-//     authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) }, function(err, resp){
-//         if(!err && resp) {
-//           res.status(200).json({
-//           status: 'success',
-//           data:resp.records
-//       });
-//       }
-//       else {
-//         res.status(err.statusCode).json(err);
-//         }
-//       });
-// };
-
-exports.getData = async (query)=>{
+exports.getData = async (req,res,query)=>{
   let result = await authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) });
-  return result;
+  return res.status(200).json({
+    records:result.records, 
+    totalSize:result.totalSize
+  });
+}
+
+exports.updateData = async (req,res,query)=>{
+  const result = await this.getData(query);
+  if(result && result.records) {
+    let acc = result.records[0];
+    Object.keys(req.body).map(key=>acc.set(key, req.body[key]));
+    await authController.org.update({sobject:acc, oauth:JSON.parse(process.env.OAUTH)}, (err,resp)=>{
+      if(!err) {
+        res.status(204).json({data:"success"});
+      }
+      else{
+        res.json({err})
+      }
+    });
+  }
 }

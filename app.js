@@ -11,6 +11,7 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const eventsRoutes = require('./routes/eventsRoutes');
 const authController = require('./controllers/authController');
+const categoriesRoutes = require('./routes/categoriesRoutes');
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/login', authController.login);
 app.use('/api/v1/events/', eventsRoutes);
+app.use('/ap/v1/categories', categoriesRoutes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
