@@ -29,7 +29,9 @@ router
 router
   .route('/:eventID')
   .get(eventsController.getEvent)
-  .patch(eventsController.updateEvent)
+  .patch(
+    // create a validate function for checking incoming data
+    eventsController.updateEvent)
 
 router
     .route('/:userID/myEvents')
