@@ -9,7 +9,7 @@ const authController = require('./authController');
   
 exports.createEvent = factory.createOne('ThornEvent__c');
 
-exports.creatseSession =factory.createOne('Session__c');
+exports.creatseSession = factory.createOne('Session__c');
   
 exports.getEvent = async (req,res)=>{
     let query =  `SELECT
@@ -124,13 +124,8 @@ exports.getEvent = async (req,res)=>{
     
   }
   
-  exports.registerAttendee = (req, res) => {
-    console.log(req.body)
-    // res.status(500).json({
-    //   status: 'error',
-    //   message: 'This route is not yet defined!'
-    // });
-  };
+  exports.registerAttendee = factory.createOne('ThornEventAttendees__c');
+
 
   exports.registerAttendees = (req, res) => {
     res.status(500).json({

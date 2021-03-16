@@ -46,6 +46,19 @@ exports.JoiEventSchema = Joi.object({
       category__c:Joi.string().required(),
       createdUserId__c:Joi.string().required()
     });
+
+    exports.JoiUpdateSessionSchema = Joi.object({
+        title__c:Joi.string().required(),
+        startDate__c:Joi.date().required(),
+        endDate__c:Joi.date().required(),
+        status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+        registrationLimit__c:Joi.number().required(),
+        startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+        endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+        description__c:Joi.string().required(),
+        seatsRemaining__c:Joi.number(),
+        category__c:Joi.string().required()
+      });
   
   exports.validateData = Schema=> (req,res,next)=>{
     const validation = Schema.validate(req.body);

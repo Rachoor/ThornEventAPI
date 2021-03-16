@@ -45,6 +45,7 @@ exports.getSessions = async (req,res)=>{
                     description__c, 
                     status__c,
                     event__r.title__c,
+                    event__r.Id,
                     seatsRemaining__c,
                     category__r.name__c,
                     createdUserId__c 
@@ -75,6 +76,7 @@ exports.getSession = async (req,res)=>{
                     description__c, 
                     status__c,
                     event__r.title__c,
+                    event__r.Id,
                     seatsRemaining__c,
                     category__r.name__c,
                     createdUserId__c 
@@ -83,7 +85,7 @@ exports.getSession = async (req,res)=>{
                     WHERE 
                     event__c='${req.params.eventID}'
                     AND
-                    Id='${req.params.sessionID}
+                    Id='${req.params.sessionID}'
                     `;
      await factory.getData(req,res,query);
   }
@@ -108,7 +110,7 @@ exports.updateSession = async (req,res)=>{
                     WHERE 
                     event__c='${req.params.eventID}'
                     AND
-                    Id='${req.params.sessionID}
+                    Id='${req.params.sessionID}'
                     `;
      await factory.updateData(req,res,query);
   }

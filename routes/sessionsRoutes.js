@@ -22,7 +22,7 @@ router
   .route('/:eventID/:sessionID')
   .get(sessionsController.getSession)
   .patch(
-    //   create validate function to validate sessions data
+      validateController.validateData(validateController.JoiUpdateSessionSchema),
       sessionsController.updateSession)
   .delete(sessionsController.deleteSession);
 
