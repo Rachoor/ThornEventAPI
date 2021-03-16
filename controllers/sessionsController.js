@@ -44,11 +44,14 @@ exports.getSessions = async (req,res)=>{
                     endTime__c, 
                     description__c, 
                     status__c,
-                    event__c 
+                    event__r.title__c,
+                    seatsRemaining__c,
+                    category__r.name__c,
+                    createdUserId__c 
                     FROM 
                     Session__c
                     WHERE 
-                    event__c'${req.params.eventID}'
+                    event__c = '${req.params.eventID}'
                     `;
      await factory.getData(req,res,query);
   }
@@ -71,7 +74,10 @@ exports.getSession = async (req,res)=>{
                     endTime__c, 
                     description__c, 
                     status__c,
-                    event__c 
+                    event__r.title__c,
+                    seatsRemaining__c,
+                    category__r.name__c,
+                    createdUserId__c 
                     FROM 
                     Session__c
                     WHERE 
@@ -93,7 +99,10 @@ exports.updateSession = async (req,res)=>{
                     endTime__c, 
                     description__c, 
                     status__c,
-                    event__c 
+                    event__r.title__c,
+                    seatsRemaining__c,
+                    category__r.name__c,
+                    createdUserId__c 
                     FROM 
                     Session__c
                     WHERE 
