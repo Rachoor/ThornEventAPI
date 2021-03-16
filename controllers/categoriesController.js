@@ -7,9 +7,5 @@ exports.getCategories = async (req,res)=>{
                 name__c 
                 FROM 
                 Category__c`;
-    const result = await factory.getData(query);
-    return res.json({
-      records:result.records, 
-      totalSize:result.totalSize
-    });
+    await factory.getData(req,res,query);
   }
