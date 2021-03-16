@@ -1,6 +1,7 @@
 const express = require('express');
 const eventsController = require('../controllers/eventsController');
 const authController = require('./../controllers/authController');
+const validateController = require('./../controllers/validateController');
 
 const router = express.Router({
   mergeParams: true
@@ -12,14 +13,15 @@ router
   .route('/')
   .get(eventsController.getEvents)
   .post(
-    eventsController.validateEventsData,
+    validateController.validateData(validateController.JoiEventSchema),
     eventsController.createEvent
   );
 
   router
   .route('/registerAttendee')
   .post(
-      eventsController.registerAttendee
+    validateController.validateData(validateController.JoiAttendeeSchema),
+    eventsController.registerAttendee
       );
   router
   .route('/registerAttendees')
