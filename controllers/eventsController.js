@@ -56,6 +56,7 @@ exports.getEvent = async (req,res)=>{
                     startTime__c, 
                     endTime__c, 
                     description__c, 
+                    Category__r.name__c,
                     status__c 
                     FROM 
                     ThornEvent__c
@@ -79,7 +80,7 @@ exports.getEvent = async (req,res)=>{
     endTime__c, 
     description__c, 
     status__c,
-    category__c,
+    Category__r.name__c,
     seatsRemaining__c
     FROM 
     ThornEvent__c
@@ -99,7 +100,7 @@ exports.getEvent = async (req,res)=>{
     endTime__c, 
     description__c, 
     status__c,
-    category__c,
+    Category__r.name__c,
     seatsRemaining__c
     FROM 
     ThornEvent__c
@@ -121,7 +122,7 @@ exports.getEvent = async (req,res)=>{
     endTime__c, 
     description__c, 
     status__c,
-    category__c,
+    Category__r.name__c,
     seatsRemaining__c
     FROM 
     ThornEvent__c
