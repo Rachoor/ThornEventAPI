@@ -15,6 +15,7 @@ exports.getEvent = async (req,res)=>{
     let query =  `SELECT
                     Id, 
                     title__c, 
+                    imageurl__c,
                     startDate__c, 
                     endDate__c, 
                     registrationLimit__c, 
@@ -38,6 +39,7 @@ exports.getEvent = async (req,res)=>{
     SELECT 
     Id,
     title__c, 
+    imageURL__c,
     startDate__c, 
     endDate__c, 
     registrationLimit__c, 
