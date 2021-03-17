@@ -15,7 +15,6 @@ exports.getEvent = async (req,res)=>{
     let query =  `SELECT
                     Id, 
                     title__c, 
-                    imageurl__c,
                     startDate__c, 
                     endDate__c, 
                     registrationLimit__c, 
@@ -39,8 +38,7 @@ exports.getEvent = async (req,res)=>{
     let query = `
     SELECT 
     Id,
-    title__c, 
-    imageURL__c,
+    title__c,
     startDate__c, 
     endDate__c, 
     registrationLimit__c, 
@@ -126,8 +124,32 @@ exports.getEvent = async (req,res)=>{
     await factory.updateData(req,res,query);
   }
 
-  exports.deleteEvent = async (req,res)=>{
-    
+  exports.deleteEvent = async (req,res)=>{}
+
+  exports.searchEvent = async (req,res,next) =>{
+    let query = `
+    SELECT 
+    Id,
+    title__c, 
+    imageURL__c,
+    startDate__c, 
+    endDate__c, 
+    registrationLimit__c, 
+    startTime__c, 
+    endTime__c, 
+    description__c, 
+    status__c,
+    Category__r.name__c,
+    seatsRemaining__c
+    FROM 
+    ThornEvent__c
+    WHERE
+    title__c 
+    LIKE
+    '%${req.params.searchName}%'`;
+
+
+    await factory.getData(req,res,query);
   }
 
   exports.registerAttendee = (req, res) => {

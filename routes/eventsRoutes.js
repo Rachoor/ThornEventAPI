@@ -23,12 +23,12 @@ router
     validateController.validateData(validateController.JoiAttendeeSchema),
     eventsController.registerAttendee
       );
-      
-  // router
-  // .route('/registerAttendees')
-  // .post(
-  //     eventsController.registerAttendees
-  //     );
+
+  router
+  .route('/search/:searchName')
+  .get(
+      eventsController.searchEvent
+      );
 router
   .route('/:eventID')
   .get(eventsController.getEvent)
