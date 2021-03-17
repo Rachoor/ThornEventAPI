@@ -22,7 +22,8 @@ exports.getEvent = async (req,res)=>{
                     endTime__c, 
                     description__c, 
                     Category__r.name__c,
-                    status__c 
+                    status__c,
+                    imageURL__c 
                     FROM 
                     ThornEvent__c
                     WHERE 
@@ -46,7 +47,8 @@ exports.getEvent = async (req,res)=>{
     description__c, 
     status__c,
     Category__r.name__c,
-    seatsRemaining__c
+    seatsRemaining__c,
+    imageURL__c
     FROM 
     ThornEvent__c
     `;
@@ -66,7 +68,8 @@ exports.getEvent = async (req,res)=>{
     description__c, 
     status__c,
     Category__r.name__c,
-    seatsRemaining__c
+    seatsRemaining__c,
+    imageURL__c
     FROM 
     ThornEvent__c
     WHERE
@@ -88,7 +91,8 @@ exports.getEvent = async (req,res)=>{
     description__c, 
     status__c,
     Category__r.name__c,
-    seatsRemaining__c
+    seatsRemaining__c,
+    imageURL__c
     FROM 
     ThornEvent__c
     WHERE
@@ -123,9 +127,6 @@ exports.getEvent = async (req,res)=>{
   exports.deleteEvent = async (req,res)=>{
     
   }
-  
-  exports.registerAttendee = factory.createOne('ThornEventAttendees__c');
-
 
   exports.registerAttendees = (req, res) => {
     res.status(500).json({

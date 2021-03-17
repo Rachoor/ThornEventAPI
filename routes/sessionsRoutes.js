@@ -18,6 +18,13 @@ router
     sessionsController.createSession
   );
 
+  router
+  .route('/:sessionID/registerAttendee')
+  .post(
+    validateController.validateData(validateController.JoiAttendeeSchema),
+    sessionsController.registerAttendee
+      );
+
 router
   .route('/:eventID/:sessionID')
   .get(sessionsController.getSession)

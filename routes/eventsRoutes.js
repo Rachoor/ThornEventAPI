@@ -17,17 +17,17 @@ router
     eventsController.createEvent
   );
 
-  router
-  .route('/registerAttendee')
-  .post(
-    validateController.validateData(validateController.JoiAttendeeSchema),
-    eventsController.registerAttendee
-      );
-  router
-  .route('/registerAttendees')
-  .post(
-      eventsController.registerAttendees
-      );
+  // router
+  // .route('/registerAttendee')
+  // .post(
+  //   validateController.validateData(validateController.JoiAttendeeSchema),
+  //   eventsController.registerAttendee
+  //     );
+  // router
+  // .route('/registerAttendees')
+  // .post(
+  //     eventsController.registerAttendees
+  //     );
 router
   .route('/:eventID')
   .get(eventsController.getEvent)

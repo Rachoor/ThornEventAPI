@@ -3,12 +3,13 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const authController = require('./authController');
 
-exports.createOne = (Subject) =>
+exports.createOne = (Subject) => 
  (req,res,next)=>{
         const subject = nforce.createSObject(Subject);
         Object.keys(req.body).map((key) => subject.set(key, req.body[key]));
          authController.org.insert({sobject:subject, oauth:JSON.parse(process.env.OAUTH)},function(err, resp){
             if(!err)  {
+              // response sending
                 res.status(201).json({
                     status: 'success',
                     data: {
@@ -19,6 +20,25 @@ exports.createOne = (Subject) =>
             else res.status(err.statusCode).json(err);
           });
     };
+  
+exports.createData = (Subject,req,res) =>{
+  const subject = nforce.createSObject(Subject);
+  Object.keys(req.body).map((key) => subject.set(key, req.body[key]));
+   authController.org.insert({sobject:subject, oauth:JSON.parse(process.env.OAUTH)},function(err, resp){
+      if(!err)  {
+        // response sending
+          res.status(201).json({
+              status: 'success',
+              data: {
+                data: resp
+              }
+            }); 
+      }
+      else {
+        res.status(err.statusCode).json(err);
+      }
+    });
+}
 
 exports.getQueryData = async(query) =>{
   let result = await authController.org.query({ query, oauth:JSON.parse(process.env.OAUTH) });
