@@ -130,7 +130,7 @@ exports.getEvent = async (req,res)=>{
     
   }
 
-  exports.registerAttendees = (req, res) => {
+  exports.registerAttendee = (req, res) => {
     res.status(500).json({
       status: 'error',
       message: 'This route is not yet defined!'

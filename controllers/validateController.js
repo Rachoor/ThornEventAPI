@@ -28,7 +28,7 @@ exports.JoiEventSchema = Joi.object({
       email__c:Joi.string().email().required(),
       phone__c:Joi.number().integer().min(10**9).max(10**10 - 1).required(),
       company__c:Joi.string().required(),
-      session__c:Joi.string().required(),
+      session__c:Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()).required(),
       event__c:Joi.string().required()
     });
   
