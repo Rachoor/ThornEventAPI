@@ -141,6 +141,7 @@ exports.updateSession = async (req,res)=>{
         result.records[0].set('seatsremaining__c', result.records[0]._fields.seatsremaining__c + 1);
         await authController.org.update({sobject:result.records[0], oauth:JSON.parse(process.env.OAUTH)}, (err,resp)=>{
           if(!err) {
+            // update seats remaining in events`
             factory.createData('ThornEventAttendees__c', req,res);
   
           }

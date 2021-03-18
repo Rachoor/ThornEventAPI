@@ -19,7 +19,8 @@ exports.JoiEventSchema = Joi.object({
     description__c:Joi.string().required(),
     seatsRemaining__c:Joi.number(),
     category__c:Joi.string().required(),
-    createdUserId__c:Joi.string().required()
+    createdUserId__c:Joi.string().required(),
+    imageURL__c:Joi.string().uri()
   });
   
   exports.JoiAttendeeSchema = Joi.object({
