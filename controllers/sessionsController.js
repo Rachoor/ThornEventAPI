@@ -115,40 +115,42 @@ exports.updateSession = async (req,res)=>{
      await factory.updateData(req,res,query);
   }
 
-  exports.registerAttendee = async (req,res,next)=>{
+  exports.registerAttendee = factory.createOne('ThornEventAttendees__c');
+  
+  // async (req,res,next)=>{
     // use same function to loop through sessions Array to register Attendee in multiple sessions
     // req.body.session__c.map(async session=>{
-      let query =  `SELECT
-                    Id, 
-                    title__c, 
-                    startDate__c, 
-                    endDate__c, 
-                    registrationLimit__c, 
-                    startTime__c, 
-                    endTime__c, 
-                    description__c, 
-                    status__c,
-                    event__r.title__c,
-                    seatsRemaining__c,
-                    category__r.name__c,
-                    createdUserId__c 
-                    FROM 
-                    Session__c
-                    WHERE
-                    Id='${req.params.sessionID}'`;
-      let result = await factory.getQueryData(query);
-      if(result.records[0]._fields.seatsremaining__c > 1) {
-        result.records[0].set('seatsremaining__c', result.records[0]._fields.seatsremaining__c + 1);
-        await authController.org.update({sobject:result.records[0], oauth:JSON.parse(process.env.OAUTH)}, (err,resp)=>{
-          if(!err) {
+      // let query =  `SELECT
+      //               Id, 
+      //               title__c, 
+      //               startDate__c, 
+      //               endDate__c, 
+      //               registrationLimit__c, 
+      //               startTime__c, 
+      //               endTime__c, 
+      //               description__c, 
+      //               status__c,
+      //               event__r.title__c,
+      //               seatsRemaining__c,
+      //               category__r.name__c,
+      //               createdUserId__c 
+      //               FROM 
+      //               Session__c
+      //               WHERE
+      //               Id='${req.params.sessionID}'`;
+      // let result = await factory.getQueryData(query);
+      // if(result.records[0]._fields.seatsremaining__c > 1) {
+      //   result.records[0].set('seatsremaining__c', result.records[0]._fields.seatsremaining__c + 1);
+      //   await authController.org.update({sobject:result.records[0], oauth:JSON.parse(process.env.OAUTH)}, (err,resp)=>{
+      //     if(!err) {
             // update seats remaining in events`
-            factory.createData('ThornEventAttendees__c', req,res);
+            // factory.createData('ThornEventAttendees__c', req,res);
   
-          }
-          else{
-            res.json({err})
-          }
-        });
-      }
-    // })
-    }
+    //       }
+    //       else{
+    //         res.json({err})
+    //       }
+    //     });
+    //   }
+    // // })
+    // }
