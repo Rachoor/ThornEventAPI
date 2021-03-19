@@ -8,28 +8,28 @@ const authController = require('./authController');
 
 
 
-exports.validateSessionsData = (req,res,next)=>{
-  const JoiSchema = Joi.object({
-      event__c:Joi.string  ().required(),
-      status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
-      registrationLimit__c:Joi.number().required(),
-      remainingSeats:Joi.number(),
-      startDate__c:Joi.date().required(),
-      startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
-      endDate__c:Joi.date().required(),
-      endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
-      description__c:Joi.string().required()
-    })
+// exports.validateSessionsData = (req,res,next)=>{
+//   const JoiSchema = Joi.object({
+//       event__c:Joi.string  ().required(),
+//       status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+//       registrationLimit__c:Joi.number().required(),
+//       remainingSeats:Joi.number(),
+//       startDate__c:Joi.date().required(),
+//       startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+//       endDate__c:Joi.date().required(),
+//       endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
+//       description__c:Joi.string().required()
+//     })
 
-    const validation = JoiSchema.validate(req.body);
-    if( validation.error ) {
-      return res.status(400).json({
-        message : validation.error.details
-      })
-    } else{
-      next();
-    }
-  }
+//     const validation = JoiSchema.validate(req.body);
+//     if( validation.error ) {
+//       return res.status(400).json({
+//         message : validation.error.details
+//       })
+//     } else{
+//       next();
+//     }
+//   }
 
 exports.createSession = factory.createOne('Session__c');
 
@@ -52,7 +52,7 @@ exports.getSessions = async (req,res)=>{
                     FROM 
                     Session__c
                     WHERE 
-                    event__c = '${req.params.eventID}'
+                    event__r.Id= '${req.params.eventID}'
                     `;
      await factory.getData(req,res,query);
   }

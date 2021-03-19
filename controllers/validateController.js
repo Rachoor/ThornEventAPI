@@ -18,7 +18,7 @@ exports.JoiEventSchema = Joi.object({
     endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
     description__c:Joi.string().required(),
     seatsRemaining__c:Joi.number(),
-    category__c:Joi.string().required(),
+    category__c:Joi.string(),
     createdUserId__c:Joi.string().required(),
     imageURL__c:Joi.string().uri()
   });
@@ -44,7 +44,7 @@ exports.JoiEventSchema = Joi.object({
       description__c:Joi.string().required(),
       event__c:Joi.string().required(),
       seatsRemaining__c:Joi.number(),
-      category__c:Joi.string().required(),
+      category__c:Joi.string(),
       createdUserId__c:Joi.string().required()
     });
 
@@ -58,7 +58,7 @@ exports.JoiEventSchema = Joi.object({
         endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
         description__c:Joi.string().required(),
         seatsRemaining__c:Joi.number(),
-        category__c:Joi.string().required()
+        category__c:Joi.string()
       });
   
   exports.validateData = Schema=> (req,res,next)=>{
