@@ -124,6 +124,7 @@ exports.getEvent = async (req,res)=>{
                   ThornEvent__c
                   WHERE
                   Id='${req.params.eventID}'`;
+                  
     await factory.updateData(req,res,query);
   }
 

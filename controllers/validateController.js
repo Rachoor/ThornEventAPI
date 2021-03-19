@@ -10,7 +10,7 @@ const authController = require('./authController');
 
 exports.JoiEventSchema = Joi.object({
     title__c:Joi.string  ().required(),
-    status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+    status__c:Joi.string().required().valid('draft', 'open', 'sold out', 'closed'),
     registrationLimit__c:Joi.number().required(),
     startDate__c:Joi.date().required(),
     startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
@@ -37,7 +37,7 @@ exports.JoiEventSchema = Joi.object({
       title__c:Joi.string().required(),
       startDate__c:Joi.date().required(),
       endDate__c:Joi.date().required(),
-      status__c:Joi.string().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+      status__c:Joi.string().valid('draft', 'open', 'sold out', 'closed'),
       registrationLimit__c:Joi.number().required(),
       startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
       endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
@@ -52,7 +52,7 @@ exports.JoiEventSchema = Joi.object({
         title__c:Joi.string().required(),
         startDate__c:Joi.date().required(),
         endDate__c:Joi.date().required(),
-        status__c:Joi.string().required().valid('Draft', 'Open', 'Sold Out', 'Closed'),
+        status__c:Joi.string().required().valid('draft', 'open', 'sold out', 'closed'),
         registrationLimit__c:Joi.number().required(),
         startTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
         endTime__c:Joi.string().required().regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/),
